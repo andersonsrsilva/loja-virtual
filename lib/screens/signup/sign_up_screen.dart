@@ -4,8 +4,8 @@ import 'package:loja_virtual/models/user_login.dart';
 import 'package:loja_virtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({Key? key}) : super(key: key);
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
@@ -17,19 +17,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Criar conta'),
         centerTitle: true,
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/signup');
-            },
-            child: const Text('Criar conta',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                )),
-          ),
-        ],
       ),
       body: Center(
         child: Card(
@@ -41,6 +30,18 @@ class LoginScreen extends StatelessWidget {
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(16),
                 children: [
+                  TextFormField(
+                    controller: emailController,
+                    enabled: !userManager.loading,
+                    decoration: const InputDecoration(hintText: 'Nome'),
+                    keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                    validator: (input) =>
+                        input!.isValidEmail() ? null : 'E-mail inválido',
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   TextFormField(
                     controller: emailController,
                     enabled: !userManager.loading,
@@ -63,23 +64,19 @@ class LoginScreen extends StatelessWidget {
                     validator: (input) =>
                         input!.isValidPassword() ? null : 'Senha inválido',
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: const Size(50, 30),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        alignment: Alignment.centerLeft,
-                      ),
-                      child: const Text(
-                        'Esqueci minha senha',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: passController,
+                    enabled: !userManager.loading,
+                    decoration:
+                        const InputDecoration(hintText: 'Repita a Senha'),
+                    autocorrect: false,
+                    obscureText: true,
+                    maxLength: 10,
+                    validator: (input) =>
+                        input!.isValidPassword() ? null : 'Senha inválido',
                   ),
                   const SizedBox(
                     height: 16,
