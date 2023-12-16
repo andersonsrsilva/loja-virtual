@@ -11,3 +11,9 @@ extension PasswordValidator on String {
     return RegExp(r'^[a-zA-Z0-9]{6,10}$').hasMatch(this);
   }
 }
+
+extension NameValidator on String {
+  bool isValidName() {
+    return RegExp(r'^[a-zA-Z]{2,}(?: [a-zA-Z]+){1,}$').hasMatch(this);
+  }
+}

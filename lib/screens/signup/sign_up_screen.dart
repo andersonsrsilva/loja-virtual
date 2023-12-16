@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/helpers/validators.dart';
-import 'package:loja_virtual/models/user_login.dart';
+import 'package:loja_virtual/models/user.dart';
 import 'package:loja_virtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
-
+  final User user = User();
+  late String passwordConfirm = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,52 +29,84 @@ class SignUpScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 children: [
                   TextFormField(
-                    controller: emailController,
                     enabled: !userManager.loading,
                     decoration: const InputDecoration(hintText: 'Nome'),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    validator: (input) =>
-                        input!.isValidEmail() ? null : 'E-mail inválido',
+                    validator: (input) {
+                      if (input!.isEmpty) {
+                        return 'Campo obrigatório';
+                      } else if (!input.isValidName()) {
+                        return 'Nome inválido';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      user.name = value;
+                    },
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   TextFormField(
-                    controller: emailController,
                     enabled: !userManager.loading,
                     decoration: const InputDecoration(hintText: 'E-mail'),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    validator: (input) =>
-                        input!.isValidEmail() ? null : 'E-mail inválido',
+                    validator: (input) {
+                      if (input!.isEmpty) {
+                        return 'Campo obrigatório';
+                      } else if (!input.isValidEmail()) {
+                        return 'E-mail inválido';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      user.email = value;
+                    },
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   TextFormField(
-                    controller: passController,
                     enabled: !userManager.loading,
                     decoration: const InputDecoration(hintText: 'Senha'),
                     autocorrect: false,
                     obscureText: true,
                     maxLength: 10,
-                    validator: (input) =>
-                        input!.isValidPassword() ? null : 'Senha inválido',
+                    validator: (input) {
+                      if (input!.isEmpty) {
+                        return 'Campo obrigatório';
+                      } else if (input.length < 6) {
+                        return 'Senha muito curta';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      user.password = value;
+                    },
+                    onChanged: (value) {
+                      passwordConfirm = value;
+                    },
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   TextFormField(
-                    controller: passController,
                     enabled: !userManager.loading,
                     decoration:
                         const InputDecoration(hintText: 'Repita a Senha'),
                     autocorrect: false,
                     obscureText: true,
                     maxLength: 10,
-                    validator: (input) =>
-                        input!.isValidPassword() ? null : 'Senha inválido',
+                    validator: (input) {
+                      if (input!.isEmpty) {
+                        return 'Campo obrigatório';
+                      } else if (input != passwordConfirm) {
+                        return 'Senhas não conferem';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -86,10 +116,8 @@ class SignUpScreen extends StatelessWidget {
                         ? null
                         : () {
                             if (formKey.currentState!.validate()) {
-                              userManager.signIn(
-                                  userLogin: UserLogin(
-                                      email: emailController.text,
-                                      password: passController.text),
+                              userManager.signUp(
+                                  user: user,
                                   onFail: (e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

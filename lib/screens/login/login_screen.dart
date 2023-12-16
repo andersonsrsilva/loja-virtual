@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/helpers/validators.dart';
-import 'package:loja_virtual/models/user_login.dart';
+import 'package:loja_virtual/models/user.dart';
 import 'package:loja_virtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +11,6 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                         : () {
                             if (formKey.currentState!.validate()) {
                               userManager.signIn(
-                                  userLogin: UserLogin(
+                                  user: User(
                                       email: emailController.text,
                                       password: passController.text),
                                   onFail: (e) {

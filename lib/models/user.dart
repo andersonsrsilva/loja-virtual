@@ -1,14 +1,14 @@
 class User {
-  int id;
-  String email;
-  String firstname;
-  String lastname;
+  int? id;
+  String? email;
+  String? name;
+  String? password;
 
   User({
-    required this.id,
-    required this.email,
-    required this.firstname,
-    required this.lastname,
+    this.id,
+    this.email,
+    this.name,
+    this.password,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -16,14 +16,12 @@ class User {
       {
         'id': int id,
         'email': String email,
-        'firstname': String firstname,
-        'lastname': String lastname,
+        'name': String name,
       } =>
         User(
           id: id,
           email: email,
-          firstname: firstname,
-          lastname: lastname,
+          name: name,
         ),
       _ => throw const FormatException('Failed to load user.'),
     };
