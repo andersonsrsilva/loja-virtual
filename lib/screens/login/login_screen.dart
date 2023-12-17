@@ -89,25 +89,21 @@ class LoginScreen extends StatelessWidget {
                         : () {
                             if (formKey.currentState!.validate()) {
                               userManager.signIn(
-                                  user: User(
-                                      email: emailController.text,
-                                      password: passController.text),
-                                  onFail: (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        content: Text('onFail: $e'),
-                                      ),
-                                    );
-                                  },
-                                  onSuccess: (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        content: Text('onSuccess: $e'),
-                                      ),
-                                    );
-                                  });
+                                user: User(
+                                    email: emailController.text,
+                                    password: passController.text),
+                                onFail: (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text('onFail: $e'),
+                                    ),
+                                  );
+                                },
+                                onSuccess: (e) {
+                                  Navigator.of(context).pop();
+                                },
+                              );
                             }
                           },
                     style: OutlinedButton.styleFrom(

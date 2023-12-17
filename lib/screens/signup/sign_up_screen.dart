@@ -4,6 +4,7 @@ import 'package:loja_virtual/models/user.dart';
 import 'package:loja_virtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
@@ -41,9 +42,7 @@ class SignUpScreen extends StatelessWidget {
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      user.name = value;
-                    },
+                    onSaved: (value) => user.name = value,
                   ),
                   const SizedBox(
                     height: 16,
@@ -61,9 +60,7 @@ class SignUpScreen extends StatelessWidget {
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      user.email = value;
-                    },
+                    onSaved: (value) => user.email = value,
                   ),
                   const SizedBox(
                     height: 16,
@@ -82,12 +79,8 @@ class SignUpScreen extends StatelessWidget {
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      user.password = value;
-                    },
-                    onChanged: (value) {
-                      passwordConfirm = value;
-                    },
+                    onSaved: (value) => user.password = value,
+                    onChanged: (value) => passwordConfirm = value,
                   ),
                   const SizedBox(
                     height: 16,
@@ -116,24 +109,29 @@ class SignUpScreen extends StatelessWidget {
                         ? null
                         : () {
                             if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+
                               userManager.signUp(
-                                  user: user,
-                                  onFail: (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        content: Text('onFail: $e'),
-                                      ),
-                                    );
-                                  },
-                                  onSuccess: (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        content: Text('onSuccess: $e'),
-                                      ),
-                                    );
-                                  });
+                                user: user,
+                                onFail: (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text('onFail: $e'),
+                                    ),
+                                  );
+                                },
+                                onSuccess: (e) {
+                                  formKey.currentState!.reset();
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text('onSuccess: $e'),
+                                    ),
+                                  );
+                                },
+                              );
                             }
                           },
                     style: OutlinedButton.styleFrom(

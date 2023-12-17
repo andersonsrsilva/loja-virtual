@@ -9,6 +9,10 @@ class UserManager extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
+  bool get isLoggedIn => userCurrent != null;
+
+  User? userCurrent;
+
   Future<void> signIn(
       {required User user,
       required Function onFail,
@@ -27,11 +31,10 @@ class UserManager extends ChangeNotifier {
         }),
       );
 
-      dynamic userCurrent = UserCurrent.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
+      _loadCurrentUser(response.body);
 
       loading = false;
-      onSuccess(userCurrent);
+      onSuccess("Login efetuado com sucesso!");
     } on PlatformException catch (e) {
       onFail(e.code);
       loading = false;
@@ -45,30 +48,40 @@ class UserManager extends ChangeNotifier {
     try {
       loading = true;
 
-      // final response = await http.post(
-      //   Uri.parse('http://10.0.2.2:3000/login'),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      //   body: jsonEncode(<String, String>{
-      //     'email': user.email!,
-      //     'password': user.password!,
-      //   }),
-      // );
-
-      // dynamic userCurrent = UserCurrent.fromJson(
-      //     jsonDecode(response.body) as Map<String, dynamic>);
+      await http.post(
+        Uri.parse('http://10.0.2.2:3000/register'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': user.email!,
+          'password': user.password!,
+          'name': user.name!,
+        }),
+      );
 
       loading = false;
-      onSuccess("userSaved");
+      onSuccess("Conta criada com sucesso!");
     } on PlatformException catch (e) {
       onFail(e.code);
       loading = false;
     }
   }
 
+  void signOut() {
+    userCurrent = null;
+    notifyListeners();
+  }
+
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+  Future<void> _loadCurrentUser(String body) async {
+    userCurrent =
+        UserCurrent.fromJson(jsonDecode(body) as Map<String, dynamic>) as User;
+
     notifyListeners();
   }
 }
