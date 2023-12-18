@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/commons/custom_drawer/custom_drawer_header_name.dart';
 import 'package:loja_virtual/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -21,15 +22,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text(
-              'Olá, ${userManager.userCurrent?.name ?? ''}',
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            CustomDrawerHeaderName(),
           ],
         );
       }),
