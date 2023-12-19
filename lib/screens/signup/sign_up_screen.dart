@@ -121,15 +121,9 @@ class SignUpScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                onSuccess: (e) {
+                                onSuccess: () {
                                   formKey.currentState!.reset();
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      content: Text('onSuccess: $e'),
-                                    ),
-                                  );
+                                  Navigator.of(context).pop();
                                 },
                               );
                             }

@@ -11,7 +11,7 @@ class UserManager extends ChangeNotifier {
 
   bool get isLoggedIn => userCurrent != null;
 
-  User? userCurrent;
+  UserCurrent? userCurrent;
 
   Future<void> signIn(
       {required User user,
@@ -34,7 +34,7 @@ class UserManager extends ChangeNotifier {
       _loadCurrentUser(response.body);
 
       loading = false;
-      onSuccess("Login efetuado com sucesso!");
+      onSuccess();
     } on PlatformException catch (e) {
       onFail(e.code);
       loading = false;
@@ -48,7 +48,7 @@ class UserManager extends ChangeNotifier {
     try {
       loading = true;
 
-      await http.post(
+      final response = await http.post(
         Uri.parse('http://10.0.2.2:3000/register'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -60,8 +60,10 @@ class UserManager extends ChangeNotifier {
         }),
       );
 
+      _loadCurrentUser(response.body);
+
       loading = false;
-      onSuccess("Conta criada com sucesso!");
+      onSuccess();
     } on PlatformException catch (e) {
       onFail(e.code);
       loading = false;
@@ -80,7 +82,7 @@ class UserManager extends ChangeNotifier {
 
   Future<void> _loadCurrentUser(String body) async {
     userCurrent =
-        UserCurrent.fromJson(jsonDecode(body) as Map<String, dynamic>) as User;
+        UserCurrent.fromJson(jsonDecode(body) as Map<String, dynamic>);
 
     notifyListeners();
   }

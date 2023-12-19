@@ -100,7 +100,8 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                onSuccess: (e) {
+                                onSuccess: () {
+                                  formKey.currentState!.reset();
                                   Navigator.of(context).pop();
                                 },
                               );

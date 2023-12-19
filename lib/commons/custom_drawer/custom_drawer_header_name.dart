@@ -9,7 +9,9 @@ class CustomDrawerHeaderName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserManager>(
       builder: (_, userManager, __) => Text(
-        'Olá, ${userManager.userCurrent?.name ?? ''}',
+        userManager.userCurrent?.user.name != null
+            ? 'Olá, ${userManager.userCurrent?.user.name}'
+            : '',
         overflow: TextOverflow.ellipsis,
         maxLines: 2,
         style: const TextStyle(
