@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/models/produtc_manager.dart';
 import 'package:loja_virtual/models/user_manager.dart';
 import 'package:loja_virtual/screens/base/base_screen.dart';
 import 'package:loja_virtual/screens/login/login_screen.dart';
@@ -14,9 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserManager(),
-      lazy: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserManager>(create: (_) => UserManager()),
+        ChangeNotifierProvider<ProductManager>(create: (_) => ProductManager()),
+      ],
       child: MaterialApp(
         title: 'Loja do Anderson',
         debugShowCheckedModeBanner: false,
