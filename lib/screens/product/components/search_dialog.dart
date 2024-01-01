@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SearchDialog extends StatelessWidget {
   SearchDialog(this.initialText, {super.key});
 

@@ -3,7 +3,7 @@ class Product {
   String name;
   String description;
   double price;
-  String images;
+  List<String> images = List.empty();
 
   Product({
     required this.id,
@@ -20,14 +20,13 @@ class Product {
         'name': String name,
         'description': String description,
         'price': double price,
-        'images': String images,
       } =>
         Product(
           id: id,
           name: name,
           description: description,
           price: price,
-          images: images,
+          images: List<String>.from(json['images'] as List<dynamic>),
         ),
       _ => throw const FormatException('Failed to load product.'),
     };
