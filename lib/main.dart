@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/models/produtc_manager.dart';
-import 'package:loja_virtual/models/user_manager.dart';
+import 'package:loja_virtual/models/managers/produtc_manager.dart';
+import 'package:loja_virtual/models/managers/user_manager.dart';
 import 'package:loja_virtual/screens/base/base_screen.dart';
 import 'package:loja_virtual/screens/login/login_screen.dart';
 import 'package:loja_virtual/screens/signup/sign_up_screen.dart';

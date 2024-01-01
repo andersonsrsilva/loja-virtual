@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/commons/custom_drawer/custom_drawer_header_logoff.dart';
 import 'package:loja_virtual/commons/custom_drawer/custom_drawer_header_name.dart';
-import 'package:loja_virtual/models/user_manager.dart';
+import 'package:loja_virtual/models/managers/user_manager.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
