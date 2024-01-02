@@ -26,4 +26,9 @@ class User {
       _ => throw const FormatException('Failed to load user.'),
     };
   }
+
+  @override
+  String toString() {
+    return 'User{id: $id, email: $email, name: $name}';
+  }
 }
