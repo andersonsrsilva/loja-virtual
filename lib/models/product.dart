@@ -40,7 +40,7 @@ class Product extends ChangeNotifier {
     };
   }
 
-  ItemSize _selectSize;
+  ItemSize _selectSize = ItemSize(name: "", price: 0.0, stock: 0);
 
   ItemSize get selectSize => _selectSize;
 

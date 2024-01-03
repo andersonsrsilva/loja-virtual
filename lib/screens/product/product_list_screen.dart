@@ -5,8 +5,8 @@ import 'package:loja_virtual/screens/product/components/product_list_tile.dart';
 import 'package:loja_virtual/screens/product/components/search_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({Key? key}) : super(key: key);
+class ProductListScreen extends StatelessWidget {
+  const ProductListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
