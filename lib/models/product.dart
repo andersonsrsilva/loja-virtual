@@ -40,13 +40,25 @@ class Product extends ChangeNotifier {
     };
   }
 
-  ItemSize _selectSize = ItemSize(name: "", price: 0.0, stock: 0);
+  ItemSize _selectedSize = ItemSize(name: "", price: 0.0, stock: 0);
 
-  ItemSize get selectSize => _selectSize;
+  ItemSize get selectedSize => _selectedSize;
 
-  set selectSize(ItemSize value) {
-    _selectSize = value;
+  set selectedSize(ItemSize value) {
+    _selectedSize = value;
     notifyListeners();
+  }
+
+  int get totalStock {
+    int stock = 0;
+    for (final size in sizes) {
+      stock += size.stock;
+    }
+    return stock;
+  }
+
+  bool get hasStock {
+    return totalStock > 0;
   }
 
   @override

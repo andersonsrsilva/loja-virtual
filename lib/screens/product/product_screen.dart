@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/models/managers/user_manager.dart';
 import 'package:loja_virtual/models/product.dart';
 import 'package:loja_virtual/screens/product/components/size_widget.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class ProductScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
                     product.name,
@@ -95,6 +96,39 @@ class ProductScreen extends StatelessWidget {
                       return SizeWidget(size: s);
                     }).toList(),
                   ),
+                  const SizedBox(height: 20),
+                  if (product.hasStock)
+                    Consumer2<UserManager, Product>(
+                      builder: (_, userManager, product, __) {
+                        return SizedBox(
+                          height: 44,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: product.selectedSize.stock > 0
+                                  ? primaryColor
+                                  : Colors.grey,
+                            ),
+                            onPressed: product.selectedSize.stock > 0
+                                ? () {
+                                    if (userManager.isLoggedIn) {
+                                      // TODO: ADICIONAR AO CARRINHO
+                                    } else {
+                                      Navigator.of(context).pushNamed('/login');
+                                    }
+                                  }
+                                : null,
+                            child: Text(
+                              userManager.isLoggedIn
+                                  ? "Adicionar ao carrinho"
+                                  : "Entre  para comprar",
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                 ],
               ),
             )

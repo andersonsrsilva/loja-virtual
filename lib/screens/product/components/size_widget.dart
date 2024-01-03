@@ -11,7 +11,7 @@ class SizeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = context.watch<Product>();
-    final selected = size == product.selectSize;
+    final selected = size == product.selectedSize;
 
     Color color;
 
@@ -26,7 +26,7 @@ class SizeWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (size.hasStock) {
-          product.selectSize = size;
+          product.selectedSize = size;
         }
       },
       child: Container(
